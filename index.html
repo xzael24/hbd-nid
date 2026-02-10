@@ -8,8 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ffd700; /* Gold */
+            --primary-color: #ffffff; /* White */
             --text-color: #e0e0e0;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glow-color: rgba(255, 255, 255, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,11 +83,11 @@
         h1 {
             font-family: 'Cinzel', serif;
             font-size: 4rem;
-            background: linear-gradient(45deg, #ffd700, #ffecb3);
+            background: linear-gradient(45deg, #ffffff, #cfcfcf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 2rem;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
             opacity: 0;
             animation: fadeTitle 2s ease-out forwards;
         }
@@ -121,28 +124,36 @@
             }
         }
 
+        /* Improved Primary Button */
         .btn {
-            padding: 15px 50px;
-            background: transparent;
-            color: #ffd700;
-            border: 2px solid #ffd700;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 1.5px;
             opacity: 0; /* Hidden initially */
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            transform: scale(1.1);
-            background: rgba(255, 215, 0, 0.1);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            text-shadow: 0 0 10px #ffd700;
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            border-color: #fff;
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         /* Fireworks Canvas */
@@ -167,133 +178,161 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.7); /* Slightly darken bg */
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
         }
 
         #welcome-overlay .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(20, 20, 30, 0.6);
             backdrop-filter: blur(15px);
             padding: 3rem;
             border-radius: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             max-width: 500px;
             width: 90%;
         }
 
         #welcome-overlay h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            animation: none; /* No fade animation for this title */
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            animation: none; 
             opacity: 1;
+            background: none;
+            -webkit-text-fill-color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
         #welcome-overlay p {
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            color: #ddd;
-        }
-
-        .song-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .song-option {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            border: 1px solid transparent;
-        }
-
-        .song-option:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #ffd700;
-        }
-
-        .song-option input {
-            margin-right: 15px;
-            accent-color: #ffd700;
-            transform: scale(1.2);
-        }
-
-        .song-label {
+            margin-bottom: 1.5rem;
             font-size: 1rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        /* Updated Music Selection Overlay */
+        .music-input-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .instruction {
+            margin-bottom: 8px !important;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        .youtube-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
             color: #fff;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .youtube-input:focus {
+            outline: none;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        .sub-instruction {
+            font-size: 0.85rem !important;
+            margin-bottom: 12px !important;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .default-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-option {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ddd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-option:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         .btn-start {
-            padding: 12px 40px;
-            background: #ffd700;
-            color: #1b2735;
+            padding: 14px 40px;
+            background: #fff;
+            color: #000;
             border: none;
             border-radius: 50px;
-            font-family: 'Cinzel', serif;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .btn-start:hover {
             transform: scale(1.05);
-            background: #ffecb3;
+            background: #f0f0f0;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem; /* Smaller title on mobile */
-                margin-bottom: 1.5rem;
-            }
+            h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+            .message { font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; }
+            .content-container { padding: 1.5rem; width: 100%; }
+            .btn { padding: 12px 30px; font-size: 0.9rem; width: 100%; max-width: 300px; }
+            
+            #welcome-overlay .card { padding: 1.5rem; width: 90%; max-height: 90vh; overflow-y: auto; }
+            #welcome-overlay h1 { font-size: 1.8rem; }
+            
+            .default-options { flex-direction: column; width: 100%; } 
+            .btn-option { width: 100%; padding: 10px; }
+            
+            .youtube-input { font-size: 0.9rem; padding: 10px; }
+        }
 
-            .message {
-                font-size: 1rem; /* Readable text size */
-                line-height: 1.6;
-                margin-bottom: 2rem;
-            }
-
-            .content-container {
-                padding: 1.5rem;
-            }
-
-            .btn {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-
-            #welcome-overlay .card {
-                padding: 2rem;
-                width: 85%;
-            }
-
-            #welcome-overlay h1 {
-                font-size: 1.8rem;
-            }
-
-            .song-label {
-                font-size: 0.9rem;
-            }
+        /* Small Phones */
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .message { font-size: 0.9rem; }
+            #welcome-overlay p { font-size: 0.9rem; }
         }
 
         /* Landscape Mode Fix */
         @media (max-height: 500px) and (orientation: landscape) {
             .content-container {
-                transform: scale(0.8); /* Scale down content to fit */
-                padding: 1rem;
+                transform: scale(0.85); /* Proper scaling */
+                padding: 0.5rem;
             }
-            
-            h1 { margin-bottom: 0.5rem; }
-            .message { margin-bottom: 1rem; }
+            .message { margin-bottom: 0.5rem; font-size: 0.9rem; }
+            h1 { margin-bottom: 0.5rem; font-size: 2rem; }
+            #welcome-overlay .card { padding: 1rem; display: flex; flex-direction: column; justify-content: center; }
+            .default-options { flex-direction: row; }
+            .btn-option { width: auto; font-size: 0.8rem; }
+            #welcome-overlay h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
         }
     </style>
 </head>
@@ -312,19 +351,15 @@
             <h1>Welcome, Nida</h1>
             <p>Seblum masuk, pilih lagu untuk nemenin km baca ini ya:</p>
             
-            <div class="song-options">
-                <label class="song-option">
-                    <input type="radio" name="song" value="rayuan" checked>
-                    <span class="song-label">Rayuan Perempuan Gila - Nadin Amizah</span>
-                </label>
-                <label class="song-option">
-                    <input type="radio" name="song" value="beranjak">
-                    <span class="song-label">Beranjak Dewasa - Nadin Amizah</span>
-                </label>
-                <label class="song-option">
-                    <input type="radio" name="song" value="jamrud">
-                    <span class="song-label">Selamat Ulang Tahun - Jamrud</span>
-                </label>
+            <div class="music-input-container">
+                <p class="instruction">Tempel link YouTube lagu favoritmu di sini:</p>
+                <input type="text" id="youtube-link" placeholder="Contoh: https://youtu.be/..." class="youtube-input">
+                <p class="sub-instruction">Atau pakai default:</p>
+                <div class="default-options">
+                    <button class="btn-option" onclick="selectDefault('rayuan')">Rayuan Perempuan Gila</button>
+                    <button class="btn-option" onclick="selectDefault('beranjak')">Beranjak Dewasa</button>
+                    <button class="btn-option" onclick="selectDefault('jamrud')">Selamat Ulang Tahun</button>
+                </div>
             </div>
 
             <button class="btn-start" onclick="enterSite()">Buka Ucapan ✨</button>
@@ -341,33 +376,99 @@
             Happy birthday yaa Nida Reyhana✨✨
         </div>
         <button class="btn" onclick="startCelebration()">Nyalain kembang api disini nid 🎆</button>
+        
+        <!-- Skip Button (Visible during animation) -->
+        <button id="skip-btn" onclick="skipAnimation()" style="display:none; position: absolute; bottom: 20px; right: 20px; padding: 8px 15px; background: rgba(255,255,255,0.1); color: #aaa; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Skip Animasi >></button>
     </div>
+
+    <!-- Hidden YouTube Player Container -->
+    <div id="player" style="display:none;"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.0/dist/index.umd.js"></script>
     
     <script>
-        // Song Database
-        // GANTI URL DI BAWAH INI DENGAN LINK MP3 YANG VALID ATAU FILE LOKAL
-        const songs = {
-    'rayuan': 'song1.mp3',
-    'beranjak': 'song2.mp3',
-    'jamrud': 'song3.mp3'
-};
+        // Load YouTube IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var selectedVideoId = 't7bT4V1G-c0'; // Default: Rayuan Perempuan Gila ID (example)
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: selectedVideoId,
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 0,
+                    'loop': 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        // Helper to extract Video ID from URL
+        function YouTubeGetID(url){
+            url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+            return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
+        }
+
+        let selectedLocalSong = null;
+
+        function selectDefault(song) {
+            // Updated to use LOCAL FILES as requested
+            const localSongs = {
+                'rayuan': 'song1.mp3',
+                'beranjak': 'song2.mp3',
+                'jamrud': 'song3.mp3'
+            };
+            
+            // Clear YouTube input to avoid confusion
+            document.getElementById('youtube-link').value = '';
+            selectedLocalSong = localSongs[song];
+
+            // Visual feedback
+            document.querySelectorAll('.btn-option').forEach(btn => {
+                btn.style.background = 'transparent';
+                btn.style.color = '#ddd';
+                btn.style.borderColor = 'rgba(255,255,255,0.2)';
+            });
+            event.target.style.background = 'rgba(255,255,255,0.2)';
+            event.target.style.borderColor = '#fff';
+            event.target.style.color = '#fff';
+        }
 
         // 1. Enter Site Logic
         function enterSite() {
-            const selectedValue = document.querySelector('input[name="song"]:checked').value;
+            const inputLink = document.getElementById('youtube-link').value;
             const audio = document.getElementById('bg-music');
-            
-            // Set source and play
-            // Note: If archive.org links fail (CORS/Hotlink protection), user must use local files
-            audio.src = songs[selectedValue];
-            
-            audio.play().catch(e => {
-                console.log("Audio play failed (browser policy?):", e);
-                alert("Klik OK untuk memutar musik manuai jika tidak bunyi otomatis.");
-                audio.play();
-            });
+
+            if (inputLink) {
+                // Priority 1: User pasted a YouTube Link
+                const extractedId = YouTubeGetID(inputLink);
+                if (extractedId && player && player.loadVideoById) {
+                    player.loadVideoById(extractedId);
+                    player.setVolume(50);
+                    player.playVideo();
+                }
+            } else if (selectedLocalSong) {
+                // Priority 2: User selected a Default Song (Local MP3)
+                audio.src = selectedLocalSong;
+                audio.play().catch(e => console.log("Audio play failed:", e));
+            } else {
+                // Priority 3: No selection -> Default fallback to Song 1 (Local)
+                audio.src = 'song1.mp3';
+                audio.play().catch(e => console.log("Audio play failed:", e));
+            }
 
             // Hide Overlay
             const overlay = document.getElementById('welcome-overlay');
@@ -378,28 +479,63 @@
                 startExperience(); // Start text animation
             }, 1000);
         }
+        
+        // Skip Animation Logic
+        let animationTimeouts = [];
 
-        // 2. Text Animation Logic (Wrapped in function)
+        function skipAnimation() {
+            // Clear all pending timeouts
+            animationTimeouts.forEach(timeout => clearTimeout(timeout));
+            
+            // Show all words immediately but SMOOTHLY
+            const words = document.querySelectorAll('.word');
+            words.forEach(word => {
+                // If word is not yet visible, fade it in
+                if (getComputedStyle(word).opacity == '0') {
+                    word.style.transition = 'opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease'; // Smooth transition
+                    word.style.animation = 'none';
+                    setTimeout(() => {
+                        word.style.opacity = '1';
+                        word.style.filter = 'blur(0)';
+                        word.style.transform = 'translateY(0)';
+                    }, 50); // Small delay to trigger transition
+                }
+            });
+
+            // Show main button smoothly
+            const btnElement = document.querySelector('.btn');
+            btnElement.style.transition = 'opacity 1.5s ease 0.5s'; // Added delay
+            btnElement.style.opacity = '1';
+            btnElement.style.pointerEvents = 'auto';
+
+            // Fade out Skip Button
+            const skipBtn = document.getElementById('skip-btn');
+            skipBtn.style.transition = 'opacity 0.5s ease';
+            skipBtn.style.opacity = '0';
+            setTimeout(() => { skipBtn.style.display = 'none'; }, 500);
+        }
+
+        // 2. Text Animation Logic
         function startExperience() {
             const content = document.getElementById('main-content');
             content.style.display = 'block';
-            // Trigger reflow
             content.offsetHeight; 
             content.style.transition = 'opacity 2s ease';
             content.style.opacity = '1';
 
+            // Show Skip Button
+            document.getElementById('skip-btn').style.display = 'block';
+
             const msgElement = document.getElementById('birthday-message');
             const btnElement = document.querySelector('.btn');
             
-            // Function to split text and wrap in spans
             function splitText(el) {
                 const nodes = Array.from(el.childNodes);
                 el.innerHTML = ''; 
-                
                 let delayCounter = 0.7; 
                 
                 nodes.forEach(node => {
-                    if (node.nodeType === 3) { // Text Node
+                    if (node.nodeType === 3) { 
                         const words = node.textContent.trim().split(/\s+/);
                         words.forEach(word => {
                             if (word.length > 0) {
@@ -408,12 +544,12 @@
                                 span.className = 'word';
                                 span.style.animationDelay = `${delayCounter}s`;
                                 el.appendChild(span);
-                                delayCounter += 0.3; // Slower: 0.2s -> 0.4s
+                                delayCounter += 0.3; 
                             }
                         });
                     } else if (node.tagName === 'BR') {
                         el.appendChild(node.cloneNode());
-                        delayCounter += 0.6; // Slower newline
+                        delayCounter += 0.6; 
                     }
                 });
                 return delayCounter;
@@ -421,11 +557,15 @@
 
             const totalTime = splitText(msgElement);
 
-            setTimeout(() => {
+            // Store the timeout ID so we can clear it if skipped
+            const timeoutId = setTimeout(() => {
                 btnElement.style.transition = 'opacity 1s ease-in';
                 btnElement.style.opacity = '1';
                 btnElement.style.pointerEvents = 'auto'; 
+                document.getElementById('skip-btn').style.display = 'none'; // Auto hide skip when done
             }, totalTime * 1000);
+            
+            animationTimeouts.push(timeoutId);
         }
 
         // 3. Stars & Meteor Logic
@@ -473,7 +613,7 @@
             if (!isCelebrating) {
                 fireworks.start();
                 const btn = document.querySelector('.btn');
-                btn.textContent = "Jangan lupa make a wish nid ✨";
+                btn.textContent = "Jangan lupa make a wish yaa nid ✨";
                 btn.style.opacity = '0.7';
                 btn.style.border = 'none';
                 btn.style.cursor = 'default';
